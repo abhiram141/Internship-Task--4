@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Goal Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="number"], input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            height: 25px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 100%;
+            width: 0%;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Savings Goal Tracker</h1>
+
+    <label for="goal">Enter Your Savings Goal ($):</label><br>
+    <input type="number" id="goal" placeholder="Enter your goal amount" /><br>
+
+    <label for="current">Current Savings ($):</label><br>
+    <input type="number" id="current" placeholder="Enter current savings" /><br>
+
+    <button onclick="updateProgress()">Update Progress</button>
+
+    <div class="status" id="status"></div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+</div>
+
+<script>
+    function updateProgress() {
+        const goal = parseFloat(document.getElementById('goal').value);
+        const current = parseFloat(document.getElementById('current').value);
+
+        if (isNaN(goal) || isNaN(current)) {
+            document.getElementById('status').textContent = 'Please enter valid numbers.';
+            return;
+        }
+
+        if (goal <= 0 || current < 0) {
+            document.getElementById('status').textContent = 'Please enter valid positive amounts.';
+            return;
+        }
+
+        // Calculate progress percentage
+        const progressPercentage = (current / goal) * 100;
+
+        // Update the progress bar
+        const progressBar = document.getElementById('progress');
+        progressBar.style.width = progressPercentage + '%';
+
+        // Update status message
+        if (current >= goal) {
+            document.getElementById('status').textContent = 'Congratulations! You have reached your goal!';
+        } else {
+            document.getElementById('status').textContent = `You are ${(progressPercentage).toFixed(2)}% of the way to your goal.`;
+        }
+    }
+</script>
+
+</body>
+</html>
